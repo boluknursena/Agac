@@ -145,7 +145,6 @@ public boolean dugumSil(int sayi) {
 		return yenilenen;
 	}
 ----
-
 <1> Silinecek düğüm bulunur ve odaklananDugume atanır.
 <2> HİÇ ÇOCUĞU YOKSA;
 <3> Silinecek düğüm kökse kökü sil.
@@ -167,7 +166,6 @@ public boolean dugumSil(int sayi) {
 <19> Yenilene sol alt ağacı da ekle.
 <20> Sağ alt ağaçtaki en küçük düğümü bulur ve yenilenene atar.
 <21> yenilecek düğümün çocuğu varsa üstün sol alt çocuğuna atanır.
-
 *****
 ****
 
