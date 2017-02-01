@@ -165,3 +165,79 @@ public boolean dugumSil(int sayi) {
 <21> yenilecek düğümün çocuğu varsa üstün sol alt çocuğuna atanır.
 
 *****
+****
+
+*BUL*
+
+[source,java]
+----
+public Dugum dugumBul(int sayi) {
+        Dugum odaklananDugum = kok;
+        while (odaklananDugum.sayi != sayi) {
+            if (sayi < odaklananDugum.sayi) {  <1>
+                odaklananDugum = odaklananDugum.solCocuk;
+            } else {                           <2>
+                odaklananDugum = odaklananDugum.sagCocuk;
+            }
+            if (odaklananDugum == null) {      <3>
+                return null;
+            }
+        }
+        return odaklananDugum;
+    }
+----
+<1> Aranan sayı odaklanan düğümden küçükse sol alt ağaçtan devam et.
+<2> Aranan sayı odaklanan düğümden büyükse sağ alt ağaçtan devam et.
+<3> Aranan sayı yoksa çık.
+****
+****
+
+*INORDER*
+
+İlk olarak sol alt ağacı dolaşır, yazar. Üstü yazar ve en son sağ alt ağacı yazar. 
+
+[source,java]
+----
+public void inOrder(Dugum odaklananDugum) {
+
+        if (odaklananDugum != null) {
+            inOrder(odaklananDugum.solCocuk);
+            System.out.println(odaklananDugum);
+            inOrder(odaklananDugum.sagCocuk);
+        }
+    }
+----
+
+****
+*PREORDER*
+
+İlk gittiğini yazar. Sonra sol alt ağaca daha sonra ise sağ alt ağaca uğrar, yazar. 
+
+[source,java]
+----
+public void preorder(Dugum odaklananDugum) {
+        if (odaklananDugum != null) {
+            System.out.println(odaklananDugum);
+            preorder(odaklananDugum.solCocuk);
+            preorder(odaklananDugum.sagCocuk);
+        }
+    }
+----
+
+****
+*POSTORDER*
+
+İlk olarak sol alt ağacı dolaşır, yazar daha sonra sağ alt ağacı dolaşır yazar. Üste(parent) en son uğrar. 
+
+[source,java]
+----
+public void postOrder(Dugum odaklananDugum) {
+        if (odaklananDugum != null) {
+            postOrder(odaklananDugum.solCocuk);
+            postOrder(odaklananDugum.sagCocuk);
+            System.out.println(odaklananDugum);
+        }
+    }
+----
+
+****
