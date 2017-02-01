@@ -2,6 +2,10 @@
 
 * Düğüm Ekle
 * Düğüm Sil
+* Bul
+* Inorder
+* Preorder
+* Postorder
 
 *DÜĞÜM*
 
