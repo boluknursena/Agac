@@ -1,0 +1,167 @@
+= İkili Ağaç
+
+* Düğüm Ekle
+* Düğüm Sil
+
+*DÜĞÜM*
+
+-----
+
+Düğümde verilen değer yani sayı, sol çocuk ve sağ çocuk tutulmaktadır.
+
+-----
+
+*DÜĞÜM EKLEME*
+
+*****
+
+[source,java]
+----
+public void dugumEkle(int sayi){
+    Dugum yeniDugum=new Dugum(sayi);  
+    if(kok==null)  <1>
+        kok=yeniDugum;
+    else
+    {
+        Dugum odaklananDugum=kok;
+        Dugum ust;
+        while(true)  <2>
+        {
+            ust=odaklananDugum;
+            if(sayi<odaklananDugum.sayi){  <3>
+                odaklananDugum=odaklananDugum.solCocuk;
+                if(odaklananDugum==null){  <4>
+                    ust.solCocuk=yeniDugum;
+                    return;
+                }
+            }
+            else   <5>
+            {
+                odaklananDugum=odaklananDugum.sagCocuk;
+                if(odaklananDugum==null){  <6>
+                    ust.sagCocuk=yeniDugum;
+                    return;
+                    }
+            }      
+        }
+    }
+}
+----
+<1> Kök yoksa kök eklenen düğümle başlar.
+<2> Verilen değeri ağaçta uygun yere eklemek için döngüye girer.
+<3> Sayı, odaklanan düğümden küçükse odaklanan düğüm kendisinin sol çocuğu olur.
+<4> Odaklanılan düğüm null ise odaklananın üstündeki düğümün sol çocuğuna yeni düğüm eklenir.
+<5> Sayı, odaklanan düğümden küçük değilse odaklanan düğüm kendisinin sağ çocuğu olur.
+<6> Odaklanılan düğüm null ise odaklananın üstündeki düğümün sağ çocuğuna yeni düğüm eklenir.
+
+*****
+
+*SİLME*
+
+*****
+
+3 farklı durum söz konusudur. Silinecek düğümün çocuğunun olmaması, tek çocuğunun olması ve 2 çocuğunun olması.
+
+* Hiç çocuk yokken düğüm direkt silinebilir.
+
+* 1 çocuk varken çocuk, silinecek düğümün bir üst düğümüne bağlanır.
+
+* 2 çocuk varken ya sağ alt ağacın en küçüğü silinecek düğümün yerine geçer ya da sol alt ağacın en büyüğü 
+silinecek düğümün yerine geçer. Eğer silinecek düğümün yerine geçen düğümün çocuğu varsa o çocuk, yerine geçen 
+düğümün eski yerine konur.
+
+[source,java]
+----
+public boolean dugumSil(int sayi) {
+		Dugum odaklananDugum=kok;
+		Dugum ust=kok;
+		boolean solCocukMu = true;
+		while (odaklananDugum.sayi != sayi) {  <1>
+			ust=odaklananDugum;
+			if (sayi<odaklananDugum.sayi) {
+				solCocukMu=true;
+				odaklananDugum=odaklananDugum.solCocuk;
+			} else {
+				solCocukMu=false;
+				odaklananDugum=odaklananDugum.sagCocuk;
+			}
+			if (odaklananDugum==null)
+				return false;
+		}
+		if (odaklananDugum.solCocuk==null && odaklananDugum.sagCocuk==null) {  <2>
+			if (odaklananDugum==kok)       <3>    
+				kok=null;
+			else if (solCocukMu)           <4>
+				ust.solCocuk=null;
+			else                           <5>
+				ust.sagCocuk=null;
+		}
+		else if (odaklananDugum.sagCocuk==null) {                              <6>
+			if (odaklananDugum==kok)                      <7>
+				kok = odaklananDugum.solCocuk;
+			else if (solCocukMu)                          <8>
+				ust.solCocuk = odaklananDugum.solCocuk;
+			else                                          <9>
+				ust.sagCocuk = odaklananDugum.solCocuk;
+		}
+		else if (odaklananDugum.solCocuk==null) {                              <10>
+			if (odaklananDugum == kok)                  <11>
+				kok = odaklananDugum.sagCocuk;
+			else if (solCocukMu)                        <12>
+				ust.solCocuk = odaklananDugum.sagCocuk;
+			else                                        <13>
+				ust.sagCocuk = odaklananDugum.sagCocuk;
+		}
+		else {                                                                 <14>
+			Dugum yenilenen=noduYenile(odaklananDugum);    <15>
+			if (odaklananDugum==kok)                       <16>
+				kok=yenilenen;
+			else if (solCocukMu)                           <17>
+				ust.solCocuk=yenilenen;
+			else                                           <18>
+				ust.sagCocuk=yenilenen;
+			yenilenen.solCocuk=odaklananDugum.solCocuk;    <19>
+		}
+		return true;
+	}
+
+	public Dugum noduYenile(Dugum yenilenecekDugum) {
+		Dugum yenileneceginustu=yenilenecekDugum;
+		Dugum yenilenen=yenilenecekDugum;
+		Dugum odaklananDugum=yenilenecekDugum.sagCocuk;
+		while (odaklananDugum!=null) {   <20>
+			yenileneceginustu=yenilenen;
+			yenilenen=odaklananDugum;
+			odaklananDugum=odaklananDugum.solCocuk;
+		}
+		if (yenilenen!=yenilenecekDugum.sagCocuk) { <21>
+			yenileneceginustu.solCocuk=yenilenen.sagCocuk;
+			yenilenen.sagCocuk=yenilenecekDugum.sagCocuk;
+		}
+		return yenilenen;
+	}
+----
+
+<1> Silinecek düğüm bulunur ve odaklananDugume atanır.
+<2> HİÇ ÇOCUĞU YOKSA;
+<3> Silinecek düğüm kökse kökü sil.
+<4> Silinecek düğüm sol çocuksa üstünün sol çocuğunu sil.
+<5> Silinecek düğüm sağ çocuksa üstünün sağ çocuğunu sil.
+<6> SOL ÇOCUĞU VARSA; 
+<7> Silinecek düğüm kökse kök artık sol çocuktur.
+<8> Silinecek düğüm sol çocuksa üstünün solu odaklanılanın soluna aktarılır.
+<9> Silinecek düğüm sağ çocuksa üstünün sağı odaklanılanın soluna aktarılır.
+<10> SAĞ ÇOCUĞU VARSA;
+<11> Silinecek düğüm kökse kök artık sağ çocuktur.
+<12> Silinecek düğüm sol çocuksa üstünün solu odaklanılanın sağına aktarılır.
+<13> Silinecek düğüm sağ çocuksa üstünün sağı odaklanılanın sağına aktarılır.
+<14> 2 ÇOCUĞU VARSA;
+<15> Yenilene düzeltilmiş sadece sol alt ağaçlı ağacı ata.
+<16> Silinecek düğüm kökse köke yanileni ata.
+<17> Silinecek düğüm sol çocuksa üstün soluna yenileneni ata.
+<18> Silinecek düğüm sağ çocuksa üstün sağ yenileneni ata.
+<19> Yenilene sol alt ağacı da ekle.
+<20> Sağ alt ağaçtaki en küçük düğümü bulur ve yenilenene atar.
+<21> yenilecek düğümün çocuğu varsa üstün sol alt çocuğuna atanır.
+
+*****
