@@ -1,8 +1,8 @@
 = AĞAÇLAR
 
 ---
-* İkili ağaç
-
+* İkili ağaç (Binary Tree)
+* Dörtlü ağaç (Quad Tree)
 ---
 
 --
