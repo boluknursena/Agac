@@ -30,28 +30,50 @@ public class DortluAgacQuadtree {
 
         Dugum odaklananDugum = kok;
         Dugum aile;
+         int i=0;
         while (true) {
             aile = odaklananDugum;
-            
+           
             if (x < odaklananDugum.x && y < odaklananDugum.y) { //günaybatı
                 odaklananDugum = odaklananDugum.cocuklar[0];
+                
                 if (odaklananDugum == null) {
                     aile.cocuklar[0] = yeniDugum;
                     return;
                 }
-            } else if (x >= odaklananDugum.x && y < odaklananDugum.y) { //günaydoğu
+                else if(odaklananDugum != null && odaklananDugum.cocuklar[0] == null ){  //! unnecessary test for null-the expression is never null
+                    Dugum araDugum = new Dugum(ortaX, ortaY);
+                    Dugum tut=odaklananDugum;
+                    aile=araDugum;         //! the assigned value is never used
+                    dugumEkle(tut.x, tut.y, ortaX,ortaY);
+                    dugumEkle(x,y,ortaX,ortaY);
+                    return;
+                   
+                }
+                i=i+2;
+                
+                
+            } 
+            
+            else if (x >= odaklananDugum.x && y < odaklananDugum.y) { //günaydoğu
                 odaklananDugum = odaklananDugum.cocuklar[1];
                 if (odaklananDugum == null) {
                     aile.cocuklar[1] = yeniDugum;
                     return;
                 }
-            } else if (x >= odaklananDugum.x && y >= odaklananDugum.y) { //kuzeydoğu
+            } 
+            
+            
+            else if (x >= odaklananDugum.x && y >= odaklananDugum.y) { //kuzeydoğu
                 odaklananDugum = odaklananDugum.cocuklar[2];
                 if (odaklananDugum == null) {
                     aile.cocuklar[2] = yeniDugum;
                     return;
                 }
-            } else {                                                    //kuzeybatı
+            } 
+            
+            
+            else {                                                    //kuzeybatı
                 odaklananDugum = odaklananDugum.cocuklar[3];
                 if (odaklananDugum == null) {
                     aile.cocuklar[3] = yeniDugum;
