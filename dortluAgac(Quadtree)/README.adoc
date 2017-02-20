@@ -41,7 +41,7 @@ ağacın her seviyesinde aynıdır.
 Örneklerimizde dolanım yönü figure 1'de gösterildiği şekilde olacaktır.
 
 
-image::Dolanım.PNG[title="Dolanım Yönü"]
+image::Dolanım.png[title="Dolanım Yönü"]
 
 
 .Örnek
