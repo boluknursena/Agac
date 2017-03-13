@@ -139,29 +139,31 @@ public void dugumEkle(int x, int y) {
 Girdiler arasında en büyük ve en küçük x ve y değerleri bulunur. En büyük x ve en küçük x değerini toplayıp ikiye böldüğümüzde orta x değerine ulaşırız. Aynı şekilde orta y değerine de ulaşırız. Derinlik i değişkeninde tutulur ve ilk değeri sıfırdır ve değişken i =i+2 şeklinde artar.
 
 
-.Algoritma
-* *Eğer kök=nullsa kök, gönderilen düğüm olacak*
-* *Eğer kök null değilse ve gönderilmek istenen yer dolu ise dörde böl. Kısmen dolu yeri oranın orta x ve orta y değeri olacak.*
-* *Eğer kök null değilse ve gönderilmek istenen yer boşsa yerleştir.* 
-
-Figure 1'de belirtilen yön doğrultusunda;
-
-*1)* (ortaX-ortaX/i,ortaY-ortaY/i)
-
-*2)* (ortaX+ortaX/i,ortaY-ortaY/i)
-
-*3)* (ortaX+ortaX/i,ortaY+ortaY/i)
-
-*4)* (ortaX-ortaX/i,ortaY+ortaY/i)
-
-
-
 .Data
 [source,]
 ----
 int x, y;
 Dugum cocuklar[] = new Dugum[4];
+Boolean isleaf;
 ----
+
+
+= Algoritma
+
+.DugumEkle(Node, data)
+* *Eğer Node=null ise datayı ekle ve isleaf=T*
+* *Eğer Node nulll değilse uygun yeri bulmak için Yer(merkez, kenarUzunluğu, data) fonksiyona yolla return 0,1,2,3 yani hangi çocuk olduğunu döner.*
+* *Dönen whichone boş mu?*
+** *Evet; yerleştir. (null olduğu için datayı ayarla ve break)*
+** *Hayır; recursive olarak DugumEkle(whichone,data)*
+
+.Yer(merkez,kenarUz,Data)
+* *Eğer data.x < merkez.x && data.y < merkez.y ise; return 0*
+* *Eğer data.x >= merkez.x && data.y < merkez.y ise; return 1*
+* *Eğer data.x >= merkez.x && data.y >= merkez.y ise; return 2*
+* *Değilse; return 3*
+
+
 
 
 
