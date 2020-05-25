@@ -1,6 +1,6 @@
 = Quad Tree
 
-Dörtlü ağaç, dörde bölünmüş bir yüzey hakkında bilgi depolayan bir veri yapısıdır. 2 boyutlu bir alanı yenilemeli bir şekilde dört bölüme ayırmak için kullanılır.
+Dörtlü ağaç, dörde bölünmüş bir yüzey hakkında bilgi depolayan bir veri yapısıdır. 2 boyutlu bir alanı yinelemeli bir şekilde dört bölüme ayırmak için kullanılır.
 
 *  Görüntü işleme
 *  Mekansal indeksleme
